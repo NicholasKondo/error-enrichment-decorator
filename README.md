@@ -43,3 +43,10 @@ kind of fragile magic this library avoids. If you need an `Error` after
 deserialization, wrap the result yourself. Metadata is shallow-merged: nested
 objects are shared by reference, so serialize before mutating shared state if
 that matters to you.
+
+## Design notes
+
+The window stores values eagerly rather than keeping running aggregates. Running
+sums drift with floating point over long streams, and recomputing from a small
+buffer is cheap enough that the drift is not worth the speed.
+
